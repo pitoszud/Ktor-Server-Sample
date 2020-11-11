@@ -16,3 +16,9 @@ fun Routing.users(){
         call.respondText("User added", contentType = ContentType.Text.Plain)
     }
 }
+
+fun Routing.user(userId: String){
+    get("/users/$userId"){
+        call.respondText(userData)
+    }
+}
