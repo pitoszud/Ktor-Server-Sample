@@ -28,19 +28,11 @@ fun Application.module(testing: Boolean = false) {
             root()
             rootPost()
             users()
+            userCount()
         }
     }
 
-
-    routing{
-        route("/users"){
-            route("/userId"){
-                handle {
-                    call.respondText("")
-                }
-            }
-        }
-    }
+    
 }
 
 

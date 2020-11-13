@@ -1,0 +1,1 @@
+curl -X GET "localhost:8080/users/count?typeToken=usertypetoken?userType=active"

@@ -6,19 +6,48 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Routing.users(){
-    get("/users"){
+fun Routing.users() {
+    get("/users") {
         call.respondText(userData)
     }
 
-    post("users"){
+    post("users") {
         userData += call.receiveText()
         call.respondText("User added", contentType = ContentType.Text.Plain)
     }
 }
 
-fun Routing.user(userId: String){
-    get("/users/$userId"){
+fun Routing.user(userId: String) {
+    get("/users/$userId") {
         call.respondText(userData)
+    }
+}
+
+fun Routing.userCount() {
+    trace {
+        application.log.trace(it.buildText())
+    }
+
+    route("/users") {
+
+        get("/active") {
+            call.respondText {
+                userData
+            }
+        }
+
+        route("/count", HttpMethod.Get) {
+            header("typeToken", "usertypetoken") {
+
+                param("userType") {
+                    handle {
+                        val userType = call.parameters["userType"]
+                        call.respondText {
+                            "${userData.length} $userType users"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
