@@ -1,1 +1,2 @@
 rootProject.name = "ktor server"
+enableFeaturePreview("GRADLE_METADATA")

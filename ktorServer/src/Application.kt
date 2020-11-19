@@ -1,6 +1,9 @@
 package com.velocip.io
 
 import io.ktor.application.*
+import io.ktor.client.*
+import io.ktor.client.engine.apache.*
+import io.ktor.client.features.json.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.response.*
@@ -16,23 +19,32 @@ var userData = "{\"users\": [\"Patryk\", \"Andrew\", \"Adrian\", \"Aiden\", ]}"
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
 
-    install(ContentNegotiation){
+    install(ContentNegotiation) {
         gson {
 
         }
     }
 
+    val client: HttpClient = HttpClient(Apache) {
+        install(JsonFeature){
+            serializer = GsonSerializer()
+        }
+    }
 
-    routing { this.apply {
 
+    routing {
+        this.apply {
+            trace { application.log.trace(it.buildText()) }
+            event(client)
             root()
             rootPost()
             users()
             userCount()
+            userAccess()
         }
     }
 
-    
+
 }
 
 
