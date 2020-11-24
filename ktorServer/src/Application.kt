@@ -41,6 +41,7 @@ fun Application.module(testing: Boolean = false) {
             users()
             userCount()
             userAccess()
+            swimmingEvent()
         }
     }
 

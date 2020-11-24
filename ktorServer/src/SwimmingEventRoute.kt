@@ -1,5 +1,6 @@
 package com.velocip.io
 
+import com.velocip.io.data.DataManager
 import com.velocip.io.domain.SwimmingEvent
 import io.ktor.application.*
 import io.ktor.client.*
@@ -28,4 +29,44 @@ fun Routing.event(client: HttpClient) {
 
         application.log.info("Consume END")
     }
+}
+
+
+fun Route.swimmingEvent(){
+    val dm = DataManager()
+
+    route("/swim"){
+        get("/"){
+            call.respond(dm.allEvents())
+        }
+
+        post("/{id}"){
+            val id = call.parameters["id"]
+            val swimmingEvent = call.receive(SwimmingEvent::class)
+            dm.updateEvent(swimmingEvent)
+            call.respondText { "Event updated" }
+        }
+
+
+        put(""){
+            val swimmingEvent = call.receive(SwimmingEvent::class)
+            dm.addEvent(swimmingEvent)
+            call.respondText { "Event added" }
+        }
+
+
+        delete("/{id}"){
+            val id = call.parameters["id"]
+
+            id?.let {
+                dm.removeEvent(it)
+            }
+
+            call.respondText { "Event Deleted" }
+
+        }
+
+
+    }
+
 }
