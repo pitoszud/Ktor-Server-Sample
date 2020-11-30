@@ -1,6 +1,7 @@
 package com.velocip.io
 
 import com.velocip.io.data.DataManager
+import com.velocip.io.domain.HypermediaLink
 import com.velocip.io.domain.SwimmingEvent
 import io.ktor.application.*
 import io.ktor.client.*
@@ -65,8 +66,26 @@ fun Route.swimmingEvent(){
             call.respondText { "Event Deleted" }
 
         }
-
-
     }
 
+}
+
+
+fun Route.swimEvent(){
+    val dm = DataManager()
+    route("swimevent"){
+        get("/"){
+            call.respond(dm.allEvents())
+        }
+
+        get("/{id}"){
+            val eventId = call.parameters["eventId"]
+            val event = dm.getEvent(eventId)
+            val hypermediaLinks = listOf<HypermediaLink>(
+                HypermediaLink("http://localhost:8080/swimevent/eventdetails")
+            )
+
+        }
+
+    }
 }

@@ -1,7 +1,6 @@
 package com.velocip.io.data
 
 import com.velocip.io.domain.SwimmingEvent
-import java.util.*
 
 class DataManager {
 
@@ -32,5 +31,13 @@ class DataManager {
     }
 
     fun allEvents() = events
+
+    fun getEvent(eventId: String?): SwimmingEvent?{
+        return if (eventId == null) {
+            null
+        } else events.find {
+            it.id == eventId
+        }
+    }
 
 }
