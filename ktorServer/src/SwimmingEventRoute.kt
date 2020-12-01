@@ -3,6 +3,7 @@ package com.velocip.io
 import com.velocip.io.data.DataManager
 import com.velocip.io.domain.HypermediaLink
 import com.velocip.io.domain.SwimmingEvent
+import com.velocip.io.domain.SwimmingEventResponse
 import io.ktor.application.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
@@ -78,13 +79,26 @@ fun Route.swimEvent(){
             call.respond(dm.allEvents())
         }
 
-        get("/{id}"){
+        get("/{eventId}"){
             val eventId = call.parameters["eventId"]
+
             val event = dm.getEvent(eventId)
-            val hypermediaLinks = listOf<HypermediaLink>(
-                HypermediaLink("http://localhost:8080/swimevent/eventdetails")
+            val hypermediaLinks: List<HypermediaLink> = listOf(
+                HypermediaLink(
+                    "http://localhost:8080/swimevent/{$eventId}/details",
+                    "details",
+                    "GET"
+                )
             )
 
+            val eventSwimResponse = SwimmingEventResponse(event, hypermediaLinks)
+            call.respond(eventSwimResponse)
+        }
+
+        get("/{eventId}/details"){
+            val eventId = call.parameters["eventId"]
+            val event = dm.getEvent(eventId)
+            call.respondText("Details for ${event?.name} event")
         }
 
     }

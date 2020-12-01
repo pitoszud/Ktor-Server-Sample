@@ -5,7 +5,7 @@ import com.velocip.io.domain.SwimmingEvent
 class DataManager {
 
     var events = mutableListOf(
-        SwimmingEvent(id = "6d7afb7d-477b-4db2-b526-b586bc58cf83", name = "MON swim", capacity = 101, price = 5.50),
+        SwimmingEvent(id = "6d7afb7d-477b-4db2b526--b586bc58cf83", name = "MON swim", capacity = 101, price = 5.50),
         SwimmingEvent(id = "14b9185f-fa38-4f01-a238-141ad4d3ce73", name = "TUE swim", capacity = 102, price = 5.50),
         SwimmingEvent(id = "262cd7a2-8aab-49bc-962d-9b0d8c0ce995", name = "WED swim", capacity = 103, price = 5.50),
         SwimmingEvent(id = "7e5cc5be-abbb-4f19-8ded-a0e128a1ed0b", name = "THU swim", capacity = 104, price = 5.50),
