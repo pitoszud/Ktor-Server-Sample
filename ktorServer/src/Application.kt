@@ -1,5 +1,6 @@
 package com.velocip.io
 
+import com.sun.tools.javac.file.Locations
 import io.ktor.application.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
@@ -23,6 +24,10 @@ fun Application.module(testing: Boolean = false) {
         gson {
 
         }
+    }
+
+    install(Locations){
+
     }
 
     val client: HttpClient = HttpClient(Apache) {
