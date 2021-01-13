@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.velocip.io.userAccess
 import com.velocip.io.userCount
 import com.velocip.io.users
@@ -7,6 +9,7 @@ import io.ktor.client.engine.apache.*
 import io.ktor.client.features.json.*
 import io.ktor.features.*
 import io.ktor.gson.*
+import io.ktor.jackson.*
 import io.ktor.response.*
 import io.ktor.request.*
 import io.ktor.routing.*
@@ -21,8 +24,14 @@ var userData = "{\"users\": [\"Patryk\", \"Andrew\", \"Adrian\", \"Aiden\", ]}"
 fun Application.module(testing: Boolean = false) {
 
     install(ContentNegotiation) {
-        gson {
+        jackson {
+            registerModule(JavaTimeModule())
+            enable(SerializationFeature.INDENT_OUTPUT)
+            disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 
+            // enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
+            // enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
+            // enable(SerializationFeature.WRAP_ROOT_VALUE)
         }
     }
 
