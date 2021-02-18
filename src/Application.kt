@@ -10,6 +10,7 @@ import io.ktor.client.features.json.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.jackson.*
+import io.ktor.locations.*
 import io.ktor.response.*
 import io.ktor.request.*
 import io.ktor.routing.*
@@ -19,6 +20,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 var userData = "{\"users\": [\"Patryk\", \"Andrew\", \"Adrian\", \"Aiden\", ]}"
 
 
+@KtorExperimentalLocationsAPI
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
@@ -34,6 +36,11 @@ fun Application.module(testing: Boolean = false) {
             // enable(SerializationFeature.WRAP_ROOT_VALUE)
         }
     }
+
+    install(Locations){
+
+    }
+
 
 
     val client: HttpClient = HttpClient(Apache) {
@@ -54,6 +61,7 @@ fun Application.module(testing: Boolean = false) {
             userAccess()
             swimmingEvent()
             swimEvent()
+            userLocation()
         }
     }
 
