@@ -1,0 +1,1 @@
+url -v "http://localhost:8080/event/organised/list?sortby=eventname&asc=1"

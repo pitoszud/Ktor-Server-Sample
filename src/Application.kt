@@ -3,6 +3,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.velocip.io.userAccess
 import com.velocip.io.userCount
 import com.velocip.io.users
+import domain.SwimUser
 import io.ktor.application.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
@@ -35,6 +36,9 @@ fun Application.module(testing: Boolean = false) {
             // enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
             // enable(SerializationFeature.WRAP_ROOT_VALUE)
         }
+        gson{
+
+        }
     }
 
     install(Locations){
@@ -48,6 +52,8 @@ fun Application.module(testing: Boolean = false) {
             serializer = GsonSerializer()
         }
     }
+
+
 
 
     routing {
