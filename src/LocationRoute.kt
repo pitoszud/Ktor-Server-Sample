@@ -6,11 +6,13 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.routing.get
 
+// https://ktor.io/docs/features-locations.html#route-classes
+
 @KtorExperimentalLocationsAPI
 fun Routing.userLocation() {
 
     get<EventLocation>{
-        call.respondText("Location nane=${it.locationname}")
+        call.respondText("$it")
     }
 
     get<Event.SwimEvent>{
@@ -20,16 +22,12 @@ fun Routing.userLocation() {
     get<Event.EventList>{
         call.respondText("$it")
     }
-
-    // http://localhost:8080/event/organised/list?sortby=eventname&asc=1
-    // EventList(event=Event(category=organised), sortby=eventname, asc=1)
-
 }
 
 
 @KtorExperimentalLocationsAPI
-@Location("/eventlocation/{locationname}")
-class EventLocation(val locationname: String)
+@Location("/eventlocation/{locationname}/lat/{eventlat}/lon/{eventlon}")
+data class EventLocation(val locationname: String, val eventlat: Double, val eventlon: Double)
 
 
 @KtorExperimentalLocationsAPI
